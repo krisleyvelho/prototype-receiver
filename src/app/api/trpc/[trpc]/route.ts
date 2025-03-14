@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter } from "../[trpc]";
 

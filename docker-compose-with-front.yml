@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  next-app:
+    image: node:18  # Usa uma imagem do Node.js para rodar o Next.js
+    working_dir: /app
+    volumes:
+      - .:/app  # Monta o código local dentro do contêiner
+    ports:
+      - "4040:4040"
+    environment:
+      - NODE_ENV=development
+    command: ["npx", "next", "dev", "-H", "0.0.0.0", "-p", "4040"]
+    depends_on:
+      - db  # Garante que o banco de dados esteja disponível antes do Next.js iniciar
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
