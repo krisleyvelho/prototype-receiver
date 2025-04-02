@@ -70,7 +70,7 @@ export default function LoginPage() {
               )}
             />
 
-            <Button type="submit">Registrar</Button>
+            <Button type="submit">Entrar</Button>
           </form>
         </Form>
         

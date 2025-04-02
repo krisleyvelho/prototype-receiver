@@ -2,11 +2,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-
 const loginSchema = z.object({
   email: z.string().email('E-mail inválido'),
   password: z.string().min(6, 'A senha deve ter pelo menos 6 caracteres'),
 });
+
 export const registerSchema = z
   .object({
     email: z.string().email('E-mail inválido'),
@@ -38,6 +38,8 @@ export function GetForm() {
       password: '',
     },
   });
+
+  
 
   return { loginForm, registerForm };
 }
