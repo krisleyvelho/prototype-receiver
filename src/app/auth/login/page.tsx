@@ -12,26 +12,23 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { api } from '@/providers';
-import { GetForm } from '../_components/getForm';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { GetForm } from '../_components/getForm';
 
 export default function LoginPage() {
   const { loginForm } = GetForm();
   const { handleSubmit } = loginForm;
-  const { mutateAsync: login } = api.auth.login.useMutation();
+  const { mutateAsync: login, isPending } = api.auth.login.useMutation();
   const router = useRouter();
-
-
 
   const onSubmit = handleSubmit((data) => {
     const { email, password } = data;
 
     try {
       login({ email, senha: password }).then((data) => {
-        console.log('🚀 ~ login ~ data:', data);
         localStorage.setItem('token', data.token);
-        router.push('/admin');
+        router.push('./admin');
       });
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error);
@@ -70,11 +67,15 @@ export default function LoginPage() {
               )}
             />
 
-            <Button type="submit">Entrar</Button>
+            <Button type="submit" disabled={isPending}>
+              Entrar
+            </Button>
           </form>
         </Form>
-        
-        <div> Ou <Link href={'./register'}>registre-se</Link></div>
+
+        <div>
+          Ou <Link href={'./register'}>registre-se</Link>
+        </div>
       </CardContent>
     </>
   );

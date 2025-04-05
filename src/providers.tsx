@@ -5,7 +5,13 @@ import { createTRPCReact } from '@trpc/react-query';
 import { useState } from 'react';
 import { AppRouter } from './app/api/trpc/[trpc]';
 
+const API_PORT = process.env.PORT || '3001';
+export const API_HOST = `http://192.168.31.168:${API_PORT}`;
+export const API_URL = `${API_HOST}/api/trpc`; //casa
 export const api = createTRPCReact<AppRouter>();
+
+// const API_URL = `http://localhost:${API_PORT}/api/trpc`;
+// const API_URL = `http://192.168.16.162:3001/api/trpc`; //casa
 
 export function TrpcProvider({ children }: {children: React.ReactNode}) {
   const [queryClient] = useState(() => new QueryClient());
@@ -13,7 +19,7 @@ export function TrpcProvider({ children }: {children: React.ReactNode}) {
     api.createClient({
       links: [
         httpBatchLink({
-          url: 'http://localhost:3000/api/trpc',
+          url: API_URL,
           // You can pass any HTTP headers you wish here
           // async headers() {
           //   return {

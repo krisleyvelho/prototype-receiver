@@ -18,11 +18,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { useRef } from 'react';
-import { useCondominioRouter } from './useCondominioRouter';
+import { useCondominioRouter } from '../hooks/useCondominioRouter';
 import {
   CreateCondominioData,
   useCreateCondominio,
-} from './useCreateCondominio';
+} from '../hooks/useCreateCondominio';
 
 export function CreateCondominio() {
   const closeBtn = useRef<HTMLButtonElement>(null);

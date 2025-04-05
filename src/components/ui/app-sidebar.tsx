@@ -30,7 +30,7 @@ const data: { navMain: ItemTreeType[] } = {
   navMain: [
     {
       title: 'Condomínios',
-      url: '#',
+      url: '/auth/admin/condominios',
       items: [],
     },
     {
@@ -112,6 +112,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {data.navMain.map((item, i) => (
           <NextedSidebarItem item={item} key={i} />
         ))}
+        
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

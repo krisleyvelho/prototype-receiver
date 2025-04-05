@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { CondominioType } from '@/app/types/client';
-import { useCondominioRouter } from './useCondominioRouter';
+import { useCondominioRouter } from '../hooks/useCondominioRouter';
 
 interface DeleteCondominioProps {
   condominioId: CondominioType['id'];

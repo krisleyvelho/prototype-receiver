@@ -4,11 +4,19 @@ import { PageProps } from '@/app/utils/nextTypes';
 import { api } from '@/providers';
 import { use, useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { useRouter } from 'next/navigation';
 
 export default function ReceiverPage({ params, searchParams }: PageProps) {
   const usedParams = use(params);
-  const { keyReceiver } = usedParams;
-  const [condominioId, time] = keyReceiver.split('_');
+  const { condominioId } = usedParams;
+  const router = useRouter();
+
+  useEffect(() => {
+    const time = new Date().getTime()
+    // router.replace(`/receiver/${condominioId}_${time}`);
+    // router.replace(`/receiver/${condominioId}_${time}`);
+  }, [])
+  // const [condominioId, time] = keyReceiver.split('_');
 
   const { data: condominio } = api.condominio.byId.useQuery({
     id: condominioId,
@@ -32,13 +40,13 @@ export default function ReceiverPage({ params, searchParams }: PageProps) {
       });
     }, 1000);
   }
-
+/* 
   useEffect(() => {
     setSecondsLeft(60);
     createTimer();
 
     // createTimer(60)
-  }, []);
+  }, []); */
 
   return (
     <div className="h-screen w-full bg-slate-800">

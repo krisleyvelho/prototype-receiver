@@ -1,16 +1,27 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 
 import mountHashReceiver from '@/app/utils/mountHashReceiver';
 import Link from 'next/link';
-import { useCondominioRouter } from './useCondominioRouter';
+import { useCondominioRouter } from '../hooks/useCondominioRouter';
 import { DeleteCondominio } from './DeleteCondominio';
 import { QRCodeSVG } from 'qrcode.react';
+import { CondominioCardSkeleton } from './CondominioCardSkeleton';
+import { API_HOST } from '@/providers';
 
 export function CondominioList() {
-  const { condominioList } = useCondominioRouter();
+  const { listQuery } = useCondominioRouter();
+  const { data: condominioList, error, isSuccess, isError, isLoading } = listQuery || {};
+  console.log("🚀 ~ CondominioList ~ isLoading:", isLoading)
+
+  if(isLoading) {
+    return <CondominioCardSkeleton />
+  }
   return (
     <div className="flex flex-col gap-4">
-      Lista de condominios:
+      {isError && <span>Erro ao listar condominios: {error.message}</span>}
+      {isSuccess && <span>Lista de condominios:</span>}
       {condominioList?.map((condominio) => (
         <div
           key={condominio.id}
@@ -26,7 +37,7 @@ export function CondominioList() {
               </Button>
 
               <Link
-                href={`receiver/${mountHashReceiver(condominio)}`}
+                href={`/receiver/${mountHashReceiver(condominio)}`}
                 target="_blank"
                 className="p-2"
               >
@@ -34,7 +45,12 @@ export function CondominioList() {
               </Link>
             </div>
             {/* <QRCodeSVG value={mountHashReceiver(condominio)} />, */}
-            <QRCodeSVG value={`http://192.168.31.168/receiver/${mountHashReceiver(condominio)}`} />,
+            <QRCodeSVG
+              value={`${API_HOST}/receiver/${mountHashReceiver(
+                condominio
+              )}`}
+            />
+            ,
           </div>
           <DeleteCondominio condominioId={condominio.id} />
         </div>
