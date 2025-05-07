@@ -8,18 +8,30 @@ datasource db {
 }
 
 model Condominio {
-  id          String        @id @default(uuid())
-  nome        String
-  endereco    String
+  id           String        @id @default(uuid())
+  nome         String
+  endereco     String
   apartamentos Apartamento[]
 }
 
 model Apartamento {
-  id           String     @id @default(uuid())
-  numero       String     // Número do apartamento
-  andar        Int        // Andar do apartamento
-  condominioId String
-  condominio   Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  id            String       @id @default(uuid())
+  numero        String
+  andar         Int
+  bloco         String?
+  condominioId  String
+  condominio    Condominio   @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+
+  responsavelId String?      // Pode ser nulo
+  responsavel   Responsavel? @relation(fields: [responsavelId], references: [id], onDelete: SetNull)
+}
+
+model Responsavel {
+  id              String        @id @default(uuid())
+  nomeResponsavel String
+  telefone        String
+
+  apartamentos    Apartamento[]  // Relacionamento inverso
 }
 
 model Admin {
